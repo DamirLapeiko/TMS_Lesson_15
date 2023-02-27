@@ -2,9 +2,12 @@ package by.teachmeskills.lapeiko.homework15;
 
 import by.teachmeskills.lapeiko.homework15.task1.BlrPassport;
 import by.teachmeskills.lapeiko.homework15.task1.Gender;
+import by.teachmeskills.lapeiko.homework15.task2.TextBlackListFilter;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Homework15 {
@@ -43,12 +46,24 @@ public class Homework15 {
                     System.out.println(blrPassport);
                     System.out.println("Is your passport expired: " + blrPassport.isExpired(LocalDate.now(ZoneId.of("Europe/Minsk"))));
                 }
-//                case 2 -> {
-//                }
-//                case 0 -> {
-//                    return;
-//                }
-//                default -> System.err.println("Task doesn't exist");
+                case 2 -> {
+                    System.out.print("Write bad words or phrase: ");
+                    String badWords = scanner.nextLine();
+                    String[] arrayOfBadWords = badWords.split(" ");
+                    TextBlackListFilter listFilter = new TextBlackListFilter(arrayOfBadWords);
+                    System.out.println("Write your text which you want to work:");
+                    String line = scanner.nextLine();
+                    System.out.println("Is your words or phrase contain bad words? " +
+                            listFilter.isContainBadWords(line));
+                    System.out.println("How many bad words in your line? " +
+                            listFilter.CounterForBadWords(line));
+                    System.out.println("Your modificated line: " +
+                            listFilter.modificatedBadWords(line));
+                }
+                case 0 -> {
+                    return;
+                }
+                default -> System.err.println("Task doesn't exist");
             }
             System.out.println();
         }
