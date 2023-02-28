@@ -7,7 +7,6 @@ import by.teachmeskills.lapeiko.homework15.task2.TextBlackListFilter;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Homework15 {
@@ -49,14 +48,14 @@ public class Homework15 {
                 case 2 -> {
                     System.out.print("Write bad words or phrase: ");
                     String badWords = scanner.nextLine();
-                    String[] arrayOfBadWords = badWords.split(" ");
+                    String[] arrayOfBadWords = badWords.split(", ");
                     TextBlackListFilter listFilter = new TextBlackListFilter(arrayOfBadWords);
                     System.out.println("Write your text which you want to work:");
                     String line = scanner.nextLine();
                     System.out.println("Is your words or phrase contain bad words? " +
                             listFilter.isContainBadWords(line));
                     System.out.println("How many bad words in your line? " +
-                            listFilter.CounterForBadWords(line));
+                            listFilter.counterForBadWords(line));
                     System.out.println("Your modificated line: " +
                             listFilter.modificatedBadWords(line));
                 }
