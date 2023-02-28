@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class BlrPassport {
+    private static final int PASSPORT_NUMBER = 9;
+    private static final int ID_NUMBER_OF_PASSPORT = 14;
     private final String lastName;
     private final String firstName;
     private final Gender gender;
@@ -12,9 +14,6 @@ public class BlrPassport {
     private final String idNumberOfPassport;
     private final LocalDate dateOfIssue;
     private final LocalDate validityOfPassport;
-    private static final int PASSPORT_NUMBER = 9;
-    private static final int ID_NUMBER_OF_PASSPORT = 14;
-
 
     public BlrPassport(String lastName, String firstName, Gender gender,
                        LocalDate dateOfBirth, String passportNumber, String idNumberOfPassport,
@@ -53,14 +52,14 @@ public class BlrPassport {
     }
 
     public boolean isExpired(LocalDate now) {
-        return now.isAfter(validityOfPassport);
+        return validityOfPassport.isAfter(now);
     }
 
     public boolean isCorrectFirstNameAndLastName(String firstName, String lastName) {
         if (firstName == null || lastName == null) {
             throw new IllegalArgumentException("Verify your name.");
         }
-        return firstName.matches("^[a-zA-Z]+$") && lastName.matches("^[a-zA-Z]+$");
+        return firstName.matches("[a-zA-Z]+") && lastName.matches("[a-zA-Z]+");
     }
 
     public boolean isValidPassport(String firstName, String lastName, String passportNumber,
