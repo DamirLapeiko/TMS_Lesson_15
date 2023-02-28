@@ -22,25 +22,26 @@ public class TextBlackListFilter {
         return false;
     }
 
-    public int CounterForBadWords(String words) {
+    public int counterForBadWords(String words) {
         int count = 0;
         for (String badWords : badWords) {
             Pattern pattern = Pattern.compile("\\b" + Pattern.quote(badWords) + "\\b",
                     Pattern.UNICODE_CHARACTER_CLASS | Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
             Matcher matcher = pattern.matcher(words);
-            if (matcher.find()) {
-                count++;
+                if (matcher.find()) {
+                    for (int i = 0; i < badWords.length(); i++) {
+                        count++;
+                    }
+                }
             }
-        }
         return count;
     }
 
     public String modificatedBadWords(String words) {
-        if (isContainBadWords(words)) {
-            for (String badWord : badWords) {
-                    words = words.replaceAll(badWord,"####");
-            }
+        String s = words;
+        for (String badWord : badWords) {
+            s = s.replaceAll(badWord, "####");
         }
-        return words;
+        return s;
     }
 }
