@@ -47,8 +47,7 @@ public class Homework15 {
                 }
                 case 2 -> {
                     System.out.print("Write bad words or phrase: ");
-                    String badWords = scanner.nextLine();
-                    String[] arrayOfBadWords = badWords.split(", ");
+                    String[] arrayOfBadWords = scanner.nextLine().trim().split("\\s*,\\s*");
                     TextBlackListFilter listFilter = new TextBlackListFilter(arrayOfBadWords);
                     System.out.println("Write your text which you want to work:");
                     String line = scanner.nextLine();

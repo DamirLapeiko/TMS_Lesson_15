@@ -4,17 +4,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TextBlackListFilter {
-    private final String[] badWords;
+    private final Pattern[] blackListPatterns;
 
     public TextBlackListFilter(String[] badWords) {
-        this.badWords = badWords;
+        blackListPatterns = new Pattern[badWords.length];
+        for (int i = 0; i < badWords.length; i++) {
+            blackListPatterns[i] = Pattern.compile("\\b" + Pattern.quote(badWords[i]) + "\\b",
+                    Pattern.UNICODE_CHARACTER_CLASS | Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
+        }
     }
 
     public boolean isContainBadWords(String comment) {
-        for (String badWords : badWords) {
-            Pattern pattern = Pattern.compile("\\b" + Pattern.quote(badWords) + "\\b",
-                    Pattern.UNICODE_CHARACTER_CLASS | Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
-            Matcher matcher = pattern.matcher(comment);
+        for (int i = 0; i < blackListPatterns.length; i++) {
+            Matcher matcher = blackListPatterns[i].matcher(comment);
             if (matcher.find()) {
                 return true;
             }
@@ -24,14 +26,10 @@ public class TextBlackListFilter {
 
     public int counterForBadWords(String words) {
         int count = 0;
-        for (String badWords : badWords) {
-            Pattern pattern = Pattern.compile("\\b" + Pattern.quote(badWords) + "\\b",
-                    Pattern.UNICODE_CHARACTER_CLASS | Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
-            Matcher matcher = pattern.matcher(words);
-                if (matcher.find()) {
-                    for (int i = 0; i < badWords.length(); i++) {
-                        count++;
-                    }
+        for (int i = 0; i < blackListPatterns.length; i++) {
+            Matcher matcher = blackListPatterns[i].matcher(words);
+            while (matcher.find()) {
+                    count++;
                 }
             }
         return count;
@@ -39,8 +37,9 @@ public class TextBlackListFilter {
 
     public String modificatedBadWords(String words) {
         String s = words;
-        for (String badWord : badWords) {
-            s = s.replaceAll(badWord, "####");
+        for (int i = 0; i < blackListPatterns.length; i++) {
+            Matcher matcher = blackListPatterns[i].matcher(s);
+            s = matcher.replaceAll("####");
         }
         return s;
     }
