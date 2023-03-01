@@ -52,7 +52,7 @@ public class BlrPassport {
     }
 
     public boolean isExpired(LocalDate now) {
-        return validityOfPassport.isAfter(now);
+        return now.isAfter(validityOfPassport);
     }
 
     public boolean isCorrectFirstNameAndLastName(String firstName, String lastName) {
